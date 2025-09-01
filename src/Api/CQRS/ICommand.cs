@@ -1,16 +1,14 @@
-using System.Windows.Input;
-
-
 namespace Api.CQRS;
+// команды отвечают за изменение состояния системы
 
 // команда без возвращения результата (интерфейс)
-public interface ICommand : ICommand<Unit>
-{
-
-}
+//пример: смена пароля (пользователю не возвращается сам пароль)
+public interface ICommand : ICommand<Unit> //Unit - тип обобщения из библ MediatR
+{}
 
 // команда с возвращением результата (интерфейс)
-public interface ICommand<out TResponse> : IRequest<TResponse>
+//пример: изменение карточки товара (пользователь видит измененную карточку)
+public interface ICommand<out TResponse> : IRequest<TResponse> //TResponse - тип обобщения из библ MediatR, наследник IRequest
 {
 
 }
