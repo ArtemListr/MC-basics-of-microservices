@@ -1,4 +1,5 @@
 using Api.Books.AppendBook;
+using FluentValidation;
 
 namespace AppendBook;
 
@@ -11,6 +12,17 @@ public record AppendBookRequest( //новая книга
     List<string> Category
 );
 
+//Реализация валидатора для новой книги
+public class AppendBookCommandValidator : AbstractValidator<AppendBookComand>
+{
+    public AppendBookCommandValidator()
+    {
+        RuleFor(item => item.Title).NotEmpty().WithMessage("Title не может быть пустым");
+        RuleFor(item => item.Price).GreaterThan(0).WithMessage("Price должен быть больше нуля");
+        RuleFor(item => item.Description).NotEmpty().WithMessage("Description не может быть пустым");
+        RuleFor(item => item.Name).NotEmpty().WithMessage("Name не может быть пустым");
+    }
+}
 
 public record AppendBookResponse(Guid Id); //формат
 

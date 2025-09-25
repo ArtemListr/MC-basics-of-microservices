@@ -1,4 +1,6 @@
+using Api.Behaviors;
 using Api.Data.Seed;
+using FluentValidation;
 
 
 
@@ -11,11 +13,15 @@ builder.Services.AddMarten(option =>
 }
 ).UseLightweightSessions().InitializeWith<InitializeBookDatabase>(); //добавляем инициализирующий список книг в базу при инициализ, если его нет
 
+var assembly = typeof(Program).Assembly;
 
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    config.RegisterServicesFromAssembly(assembly);
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+
+builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddCarter();
 
