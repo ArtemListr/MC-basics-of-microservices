@@ -1,6 +1,7 @@
 namespace Api.Books.UpdateBook;
 using Api.CQRS;
 using Api.Model;
+using Api.Exceptions;
 
 
 public record UpdateBookComand( //обновляемая книга
@@ -27,7 +28,7 @@ public class UpdateBookCommandHandler(IDocumentSession session)
 
         if (book is null)
         {
-            throw new Exception();
+            throw new BookNotFoundException(command.Id);
         }
 
         command.Adapt(book);
