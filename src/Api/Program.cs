@@ -1,5 +1,6 @@
 using Api.Behaviors;
 using Api.Data.Seed;
+using Api.Exceptions.Handler;
 using FluentValidation;
 
 
@@ -25,8 +26,10 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddCarter();
 
-var app = builder.Build();
+builder.Services.AddExceptionHandler<CustomExteptionHandler>();
 
+var app = builder.Build();
+app.UseExceptionHandler(opt => { });
 app.MapCarter();
 
 app.Run();
